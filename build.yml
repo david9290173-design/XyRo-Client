@@ -13,7 +13,7 @@ jobs:
         with:
           gradle-version: 9.2.0
       - run: |
-          unzip -q XyRo-Client-0_1_13-Source.zip
+          unzip -q XyRo-Client-0.1.13-Source.zip
           cd XyRo-Client-0.1.13
           gradle build
       - uses: actions/upload-artifact@v4
