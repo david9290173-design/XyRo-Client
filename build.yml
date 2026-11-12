@@ -1,34 +1,22 @@
-name: Build XyRo Client
-
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
-
+name: build
+on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Java 21
-        uses: actions/setup-java@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
-
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '8.14'
-
-      - name: Build client
-        run: gradle build
-
-      - name: Upload JAR
-        uses: actions/upload-artifact@v4
+          gradle-version: 9.2.0
+      - run: |
+          unzip -q XyRo-Client-0_1_13-Source.zip
+          cd XyRo-Client-0.1.13
+          gradle build
+      - uses: actions/upload-artifact@v4
         with:
-          name: XyRo-Client-JAR
-          path: build/libs/*.jar
+          name: xyro-jar
+          path: XyRo-Client-0.1.13/build/libs/xyro-client-0.1.13.jar
